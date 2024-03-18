@@ -1,3 +1,6 @@
+import sys
+import time
+
 from kivymd.app import MDApp
 from kivymd.icon_definitions import md_icons
 from kivy.lang import Builder
@@ -5,7 +8,11 @@ from kivy.core.window import Window
 from moviepy.editor import VideoFileClip
 from kivymd.uix.screenmanager import ScreenManager
 from kivy.config import Config
+from kivymd.uix.filemanager import MDFileManager
+from kivy.metrics import dp
 import os
+from kivymd.uix.snackbar import MDSnackbar,MDSnackbarText
+from kivymd.uix.dialog import MDDialog,MDDialogIcon,MDDialogHeadlineText
 Config.set('graphics', 'resizable',False)
 Config.write()
 
@@ -20,13 +27,72 @@ class ConvertApp(MDApp):
         Builder.load_file('Style.kv')
         return MainWindow()
     def convert(self):
+
         if (os.path.exists(self.root.ids.target_mp4.text)
                 and os.path.exists(self.root.ids.target_gif.text)
                 and self.root.ids.target_mp4.text != ''
                 and self.root.ids.target_gif.text != ''
                 and self.root.ids.gif_name.text != ''):
-            video = VideoFileClip('media.mp4')
-            video.write_gif('media.gif')
+            video = VideoFileClip(str(self.root.ids.target_mp4.text))
+            video.write_gif(str(self.root.ids.target_gif.text+'\\'+self.root.ids.gif_name.text+'.gif'),fps=30)
+            self.Dialog_cmp()
         else:
-            print('No video file found')
+            MDDialog(
+                MDDialogIcon(
+                    icon = 'alert'
+                ),
+                MDDialogHeadlineText(
+                    text = 'Patch Doesnt exist or Is Not a Video file'
+                )
+            ).open()
+
+    def select_path(self, path: str):
+        texxt = path
+        self.root.ids.target_mp4.text = texxt
+        self.exit_manager()
+    def file1(self):
+        global file_manager
+        path = os.path.expanduser("~")
+        file_manager = MDFileManager(
+            exit_manager=self.exit_manager,
+            select_path=self.select_path,
+        )
+        file_manager.show(path)
+
+    def exit_manager(self, *args):
+
+        self.manager_open = False
+        file_manager.close()
+    #-------------------------------------
+
+
+    def select_path2(self, path: str):
+        texxt = path
+        self.root.ids.target_gif.text = texxt
+        self.exit_manager2()
+    def file2(self):
+        global file_manager2
+        path = os.path.expanduser("~")
+        file_manager2 = MDFileManager(
+            exit_manager=self.exit_manager2,
+            select_path=self.select_path2,
+        )
+        file_manager2.show(path)
+
+    def exit_manager2(self, *args):
+
+        self.manager_open = False
+        file_manager2.close()
+    def Dialog_cmp(self):
+        MDSnackbar(
+            MDSnackbarText(
+                text="app is closing and gif is ready",
+            ),
+            y=dp(24),
+            pos_hint={"center_x": 0.5},
+            size_hint_x=0.5,
+        ).open()
+
+        Window.close()
+        sys.exit()
 ConvertApp().run()

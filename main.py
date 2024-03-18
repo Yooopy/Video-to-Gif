@@ -1,10 +1,11 @@
 #!/usr/bin/env pypy
+import imageio
+import pygifsicle
 from kivymd.app import MDApp
 from kivymd.icon_definitions import md_icons
 from kivy.lang import Builder
 from kivy.core.window import Window
 from moviepy.editor import VideoFileClip
-from moviepy import *
 from kivymd.uix.screenmanager import ScreenManager
 from kivy.config import Config
 from kivymd.uix.filemanager import MDFileManager
@@ -34,8 +35,12 @@ class ConvertApp(MDApp):
                 and self.root.ids.target_mp4.text != ''
                 and self.root.ids.target_gif.text != ''
                 and self.root.ids.gif_name.text != ''):
-            video = VideoFileClip(str(self.root.ids.target_mp4.text))
-            video.write_gif(str(self.root.ids.target_gif.text+'\\'+self.root.ids.gif_name.text+'.gif'),fps=30)
+            # video = VideoFileClip(str(self.root.ids.target_mp4.text))
+            # video.write_gif(str(self.root.ids.target_gif.text+'\\'+self.root.ids.gif_name.text+'.gif'),fps=30)
+            frames = imageio.imread('video.mp4')
+            gif_image = pygifsicle.optimize(frames)
+            with open('x.gif', 'wb') as f:
+                f.write(gif_image)
             self.Dialog_cmp()
         else:
             MDDialog(

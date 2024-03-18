@@ -1,6 +1,4 @@
-import sys
-import time
-
+#!/usr/bin/env pypy
 from kivymd.app import MDApp
 from kivymd.icon_definitions import md_icons
 from kivy.lang import Builder
@@ -25,6 +23,8 @@ class ConvertApp(MDApp):
         self.theme_cls.theme_style = 'Dark'
         self.theme_cls.primary_palette = 'Snow'
         Builder.load_file('Style.kv')
+        self.title = 'Convert video to gif'
+        self.icon = 'Yooopy.png'
         return MainWindow()
     def convert(self):
 
@@ -86,13 +86,35 @@ class ConvertApp(MDApp):
     def Dialog_cmp(self):
         MDSnackbar(
             MDSnackbarText(
-                text="app is closing and gif is ready",
+                text="When you close App, Gif is ready",
             ),
-            y=dp(24),
+            y=dp(40),
             pos_hint={"center_x": 0.5},
             size_hint_x=0.5,
         ).open()
 
-        Window.close()
-        sys.exit()
+
+
+    def close_application(self):
+        pass
+    def change_theme(self):
+        if self.theme_cls.theme_style == 'Dark':
+            self.theme_cls.theme_style = 'Light'
+            self.root.ids.theme.icon = 'weather-night'
+            self.root.ids.hello.md_bg_color = '#808080'
+        elif self.theme_cls.theme_style == 'Light':
+            self.theme_cls.theme_style = 'Dark'
+            self.root.ids.theme.icon = 'weather-sunny'
+            self.root.ids.hello.md_bg_color = '#191919'
+    def color_set(self,instance):
+        self.theme_cls.primary_palette = instance
+        self.root.transition.direction = 'right'
+        self.root.current = 'main'
+    def main1(self):
+        self.root.transition.direction = 'left'
+        self.root.current = 'main2'
+
+
+
+
 ConvertApp().run()

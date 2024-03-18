@@ -1,5 +1,8 @@
+#: import webbrowser webbrowser
 <MainWindow>:
     MDScreen:
+        id: hello
+        md_bg_color: '#191919'
         name: 'main'
         MDFloatLayout:
             orientation: 'vertical'
@@ -10,64 +13,81 @@
                 size_hint: 0.98,0.9
                 pos_hint: {'top': 1,'center_x': 0.5}
                 Widget:
-                MDBoxLayout:
-                    orientation: 'vertical'
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                    size_hint: 0.6,1
-                    MDBoxLayout:
-                        spacing: 10
-                        orientation: 'horizontal'
-                        MDCard:
-                            radius: 25
-                            style: 'elevated'
-                            size_hint_y: 1.3
-                            MDTextField:
-                                radius: 25
-                                id: target_mp4
-                                theme_line_color: "Custom"
-                                line_color_normal: (0,0,0,0)
-                                MDTextFieldHintText:
-                                    text: 'Mp4 Location'
-                        MDFabButton:
-                            on_release: app.file1()
-                            icon: 'file-edit'
-                    Widget:
-                        size_hint_y: 1.2
-                    MDBoxLayout:
-                        spacing: 10
-                        orientation: 'horizontal'
-                        MDCard:
-                            radius: 25
-                            style: 'elevated'
-                            size_hint_y: 1.3
-                            MDTextField:
-                                radius: 25
-                                id: target_gif
-                                theme_line_color: "Custom"
-                                line_color_normal: (0,0,0,0)
-                                MDTextFieldHintText:
-                                    text: 'Gif Target Location'
-                        MDFabButton:
-                            on_release: app.file2()
-                            icon: 'file-edit'
-                Widget:
-                    size_hint_y: 0.5
                 MDCard:
-                    pos_hint: {'center_x': 0.5,}
-                    radius: 25
-                    style: 'elevated'
-                    size_hint: 0.5,0.4
-                    radius: 25
-                    MDTextField:
-                        id: gif_name
-                        radius: 25
-                        theme_line_color: "Custom"
-                        line_color_normal: (0,0,0,0)
-                        MDTextFieldHintText:
-                            text: 'Gif Name'
+                    style: 'outlined'
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    size_hint: 0.7,6
+                    theme_bg_color: "Custom"
+                    md_bg_color: (0,0,0,0)
+                    MDFloatLayout:
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                            size_hint: 0.7,0.5
+                            MDBoxLayout:
+                                spacing: 10
+                                orientation: 'horizontal'
+                                MDCard:
+                                    radius: 25
+                                    style: 'elevated'
+                                    size_hint_y: None
+                                    height: 70
+                                    MDTextField:
+                                        radius: 25
+                                        id: target_mp4
+                                        theme_line_color: "Custom"
+                                        line_color_normal: (0,0,0,0)
+                                        MDTextFieldHintText:
+                                            text: 'Mp4 Location'
+                                MDFabButton:
+                                    on_release: app.file1()
+                                    icon: 'file-edit'
+#                            Widget:
+#                                size_hint_y: 0.1
+                            MDBoxLayout:
+                                spacing: 10
+                                orientation: 'horizontal'
+                                MDCard:
+                                    radius: 25
+                                    style: 'elevated'
+                                    size_hint_y: None
+                                    height: 70
+                                    MDTextField:
+                                        radius: 25
+                                        id: target_gif
+                                        theme_line_color: "Custom"
+                                        line_color_normal: (0,0,0,0)
+                                        MDTextFieldHintText:
+                                            text: 'Gif Target Location'
+                                MDFabButton:
+                                    on_release: app.file2()
+                                    icon: 'file-edit'
+#                            Widget:
+#                                size_hint_y: 0.7
+                        MDCard:
 
+                            pos_hint: {'center_x': 0.5,'center_y': 0.2}
+                            radius: 25
+                            style: 'elevated'
+                            size_hint: 0.5,0.14
+                            radius: 25
+                            MDTextField:
+                                id: gif_name
+                                radius: 25
+                                theme_line_color: "Custom"
+                                line_color_normal: (0,0,0,0)
+                                MDTextFieldHintText:
+                                    text: 'Gif Name'
 
+                        Widget
                 Widget
+            MDLabel:
+                text: 'Video To Gif'
+                size_hint: 1,None
+                font_style: 'Display'
+                role: 'medium'
+                halign: 'center'
+                pos_hint: {'center_y': 0.87}
 
             MDCard:
                 spacing: 5
@@ -82,27 +102,33 @@
                 radius: 30
                 MDIconButton:
                     icon: 'github'
+                    on_release: webbrowser.open('https://github.com/Yooopy')
                 MDDivider:
                     orientation: 'vertical'
                     size_hint_y: 0.7
                     pos_hint: {'center_y': 0.5}
                 MDIconButton:
                     icon: 'mail'
+                    on_release: webbrowser.open('mailto:vgeraph@yahoo.com')
                 MDDivider:
                     orientation: 'vertical'
                     size_hint_y: 0.7
                     pos_hint: {'center_y': 0.5}
                 MDIconButton:
                     icon: 'send'
+                    on_release: webbrowser.open('https://t.me/Jisatsu_now')
                 Widget
                 MDIconButton:
                     icon: 'palette'
+                    on_release: app.main1()
                 MDDivider:
                     orientation: 'vertical'
                     size_hint_y: 0.7
                     pos_hint: {'center_y': 0.5}
                 MDIconButton:
+                    id: theme
                     icon: 'weather-sunny'
+                    on_release: app.change_theme()
             MDLabel:
                 text_color: '#303030'
                 text: 'Made By V | 2024'
@@ -126,4 +152,63 @@
                     icon: 'content-save'
                     on_release: app.convert()
 
+
+    MDScreen:
+        md_bg_color: self.theme_cls.primaryColor
+        name: 'main2'
+        MDCard:
+            theme_bg_color: "Custom"
+            md_bg_color: (0,0,0,0)
+            size_hint: 0.5,0.8
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            MDScrollView:
+                MDList:
+                    spacing: 20
+                    radius: 20
+
+                    MDListItem:
+                        on_release: app.color_set('Snow')
+                        MDListItemHeadlineText:
+                            text: 'Purple'
+
+                    MDListItem:
+                        on_release: app.color_set('Darkblue')
+                        MDListItemHeadlineText:
+                            text: 'Blue'
+                    MDListItem:
+                        on_release: app.color_set('Seagreen')
+                        MDListItemHeadlineText:
+                            text: 'Green'
+                    MDListItem:
+                        on_release: app.color_set('Yellow')
+                        MDListItemHeadlineText:
+                            text: 'Yellow'
+                    MDListItem:
+                        on_release: app.color_set('Gold')
+                        MDListItemHeadlineText:
+                            text: 'Gold'
+                    MDListItem:
+                        on_release: app.color_set('Orange')
+                        MDListItemHeadlineText:
+                            text: 'Orange'
+                    MDListItem:
+                        on_release: app.color_set('Red')
+                        MDListItemHeadlineText:
+                            text: 'Red'
+                    MDListItem:
+                        on_release: app.color_set('Pink')
+                        MDListItemHeadlineText:
+                            text: 'Pink'
+
+
+
+
+<MDListItem>:
+    radius: 35
+    height: 80
+    theme_width: "Custom"
+    width: 100
+    MDListItemTrailingIcon:
+        pos_hint: {'center_y': 0.5}
+        icon: 'palette'
 

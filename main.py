@@ -4,6 +4,7 @@ from kivymd.icon_definitions import md_icons
 from kivy.lang import Builder
 from kivy.core.window import Window
 from moviepy.editor import VideoFileClip
+from moviepy import *
 from kivymd.uix.screenmanager import ScreenManager
 from kivy.config import Config
 from kivymd.uix.filemanager import MDFileManager
